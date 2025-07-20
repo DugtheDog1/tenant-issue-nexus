@@ -30,34 +30,27 @@ const Index = () => {
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
           <StatsCard
             title="Open Tickets"
-            value={23}
-            description="4 urgent, 8 high priority"
+            value={0}
+            description="No tickets yet"
             icon={Inbox}
-            trend={{ value: 12, label: "from last week", direction: "up" }}
-            variant="destructive"
           />
           <StatsCard
             title="Properties"
-            value={8}
-            description="Across 3 locations"
+            value={0}
+            description="No properties added"
             icon={Building2}
-            trend={{ value: 0, label: "no change", direction: "up" }}
           />
           <StatsCard
             title="Active Tenants"
-            value={156}
-            description="95% occupancy rate"
+            value={0}
+            description="No tenants yet"
             icon={Users}
-            trend={{ value: 2.5, label: "from last month", direction: "up" }}
-            variant="success"
           />
           <StatsCard
             title="Avg Response Time"
-            value="2.4h"
-            description="Target: <4h"
+            value="--"
+            description="No data available"
             icon={Clock}
-            trend={{ value: 15, label: "improvement", direction: "down" }}
-            variant="success"
           />
         </div>
 
@@ -65,27 +58,21 @@ const Index = () => {
         <div className="grid gap-4 md:grid-cols-3">
           <StatsCard
             title="AI Tickets Processed"
-            value={89}
-            description="This week"
+            value={0}
+            description="No tickets processed yet"
             icon={Zap}
-            trend={{ value: 34, label: "vs last week", direction: "up" }}
-            variant="default"
           />
           <StatsCard
             title="Auto-Resolved"
-            value={12}
-            description="No human intervention"
+            value={0}
+            description="No automated resolutions"
             icon={CheckCircle}
-            trend={{ value: 8, label: "efficiency gain", direction: "up" }}
-            variant="success"
           />
           <StatsCard
             title="Escalations"
-            value={5}
-            description="Requiring urgent attention"
+            value={0}
+            description="No escalations"
             icon={AlertTriangle}
-            trend={{ value: 2, label: "from yesterday", direction: "up" }}
-            variant="warning"
           />
         </div>
 
