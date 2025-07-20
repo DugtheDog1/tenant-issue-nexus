@@ -6,53 +6,7 @@ import { Switch } from "@/components/ui/switch";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Bell, Settings, Trash2, CheckCircle, AlertTriangle, Info, MessageSquare, Calendar, Wrench } from "lucide-react";
 
-const notifications = [
-  {
-    id: 1,
-    title: "New Maintenance Request",
-    message: "Sarah Johnson submitted a request for leaky faucet in Apt 12A",
-    type: "maintenance",
-    timestamp: "2 hours ago",
-    isRead: false,
-    priority: "medium"
-  },
-  {
-    id: 2,
-    title: "Lease Expiring Soon",
-    message: "Emily Rodriguez's lease for Unit 8B expires in 30 days",
-    type: "lease",
-    timestamp: "1 day ago",
-    isRead: false,
-    priority: "high"
-  },
-  {
-    id: 3,
-    title: "Payment Received",
-    message: "Michael Chen's rent payment for Suite 205 has been processed",
-    type: "payment",
-    timestamp: "2 days ago",
-    isRead: true,
-    priority: "low"
-  },
-  {
-    id: 4,
-    title: "Inspection Scheduled",
-    message: "Property inspection for Sunset Apartments scheduled for January 20th",
-    type: "inspection",
-    timestamp: "3 days ago",
-    isRead: true,
-    priority: "medium"
-  },
-  {
-    id: 5,
-    title: "New Message",
-    message: "You have a new message from David Wilson regarding parking issues",
-    type: "message",
-    timestamp: "5 days ago",
-    isRead: false,
-    priority: "low"
-  }
-];
+const notifications: any[] = [];
 
 const notificationSettings = [
   {
@@ -152,7 +106,7 @@ export default function Notifications() {
               <Bell className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">8</div>
+              <div className="text-2xl font-bold">0</div>
               <p className="text-xs text-muted-foreground">notifications</p>
             </CardContent>
           </Card>
@@ -162,7 +116,7 @@ export default function Notifications() {
               <AlertTriangle className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">3</div>
+              <div className="text-2xl font-bold">0</div>
               <p className="text-xs text-muted-foreground">urgent items</p>
             </CardContent>
           </Card>
@@ -172,7 +126,7 @@ export default function Notifications() {
               <Calendar className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">24</div>
+              <div className="text-2xl font-bold">0</div>
               <p className="text-xs text-muted-foreground">notifications</p>
             </CardContent>
           </Card>
@@ -182,7 +136,7 @@ export default function Notifications() {
               <CheckCircle className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">92%</div>
+              <div className="text-2xl font-bold">--</div>
               <p className="text-xs text-muted-foreground">avg response</p>
             </CardContent>
           </Card>
@@ -210,38 +164,46 @@ export default function Notifications() {
                 </div>
               </CardHeader>
               <CardContent className="space-y-4">
-                {notifications.map((notification) => (
-                  <div
-                    key={notification.id}
-                    className={`flex items-start space-x-4 p-4 rounded-lg border transition-colors ${
-                      !notification.isRead ? "bg-muted/30 border-primary/20" : "hover:bg-muted/50"
-                    }`}
-                  >
-                    <div className={`p-2 rounded-full text-white ${getNotificationColor(notification.type)}`}>
-                      {getNotificationIcon(notification.type)}
-                    </div>
-                    <div className="flex-1 space-y-1">
-                      <div className="flex items-center justify-between">
-                        <h4 className={`text-sm font-medium ${!notification.isRead ? "font-semibold" : ""}`}>
-                          {notification.title}
-                        </h4>
-                        <div className="flex items-center space-x-2">
-                          <Badge variant={getPriorityBadge(notification.priority) as "default"} className="text-xs">
-                            {notification.priority}
-                          </Badge>
-                          {!notification.isRead && (
-                            <div className="w-2 h-2 bg-primary rounded-full" />
-                          )}
-                        </div>
-                      </div>
-                      <p className="text-sm text-muted-foreground">{notification.message}</p>
-                      <p className="text-xs text-muted-foreground">{notification.timestamp}</p>
-                    </div>
-                    <Button variant="ghost" size="sm">
-                      <Trash2 className="h-4 w-4" />
-                    </Button>
+                {notifications.length === 0 ? (
+                  <div className="text-center py-12">
+                    <Bell className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
+                    <h3 className="text-lg font-medium text-foreground mb-2">No Notifications</h3>
+                    <p className="text-muted-foreground">All notifications will appear here</p>
                   </div>
-                ))}
+                ) : (
+                  notifications.map((notification) => (
+                    <div
+                      key={notification.id}
+                      className={`flex items-start space-x-4 p-4 rounded-lg border transition-colors ${
+                        !notification.isRead ? "bg-muted/30 border-primary/20" : "hover:bg-muted/50"
+                      }`}
+                    >
+                      <div className={`p-2 rounded-full text-white ${getNotificationColor(notification.type)}`}>
+                        {getNotificationIcon(notification.type)}
+                      </div>
+                      <div className="flex-1 space-y-1">
+                        <div className="flex items-center justify-between">
+                          <h4 className={`text-sm font-medium ${!notification.isRead ? "font-semibold" : ""}`}>
+                            {notification.title}
+                          </h4>
+                          <div className="flex items-center space-x-2">
+                            <Badge variant={getPriorityBadge(notification.priority) as "default"} className="text-xs">
+                              {notification.priority}
+                            </Badge>
+                            {!notification.isRead && (
+                              <div className="w-2 h-2 bg-primary rounded-full" />
+                            )}
+                          </div>
+                        </div>
+                        <p className="text-sm text-muted-foreground">{notification.message}</p>
+                        <p className="text-xs text-muted-foreground">{notification.timestamp}</p>
+                      </div>
+                      <Button variant="ghost" size="sm">
+                        <Trash2 className="h-4 w-4" />
+                      </Button>
+                    </div>
+                  ))
+                )}
               </CardContent>
             </Card>
           </div>

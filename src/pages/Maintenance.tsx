@@ -6,44 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Wrench, Plus, Search, Calendar, User, MapPin, AlertTriangle } from "lucide-react";
 
-const maintenanceRequests = [
-  {
-    id: "MR-001",
-    title: "Leaky Faucet in Kitchen",
-    property: "Sunset Apartments",
-    unit: "Apt 12A",
-    tenant: "Sarah Johnson",
-    priority: "Medium",
-    status: "In Progress",
-    createdDate: "2024-01-15",
-    assignedTo: "Mike Rodriguez",
-    category: "Plumbing"
-  },
-  {
-    id: "MR-002",
-    title: "Broken Air Conditioning",
-    property: "Downtown Office Complex",
-    unit: "Suite 205",
-    tenant: "Michael Chen",
-    priority: "High",
-    status: "Open",
-    createdDate: "2024-01-18",
-    assignedTo: "Unassigned",
-    category: "HVAC"
-  },
-  {
-    id: "MR-003",
-    title: "Electrical Outlet Not Working",
-    property: "Riverside Condos",
-    unit: "Unit 8B",
-    tenant: "Emily Rodriguez",
-    priority: "Low",
-    status: "Completed",
-    createdDate: "2024-01-12",
-    assignedTo: "John Smith",
-    category: "Electrical"
-  }
-];
+const maintenanceRequests: any[] = [];
 
 export default function Maintenance() {
   return (
@@ -67,8 +30,8 @@ export default function Maintenance() {
               <Wrench className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">8</div>
-              <p className="text-xs text-muted-foreground">+2 from last week</p>
+              <div className="text-2xl font-bold">0</div>
+              <p className="text-xs text-muted-foreground">No requests yet</p>
             </CardContent>
           </Card>
           <Card>
@@ -77,8 +40,8 @@ export default function Maintenance() {
               <Calendar className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">5</div>
-              <p className="text-xs text-muted-foreground">-1 from last week</p>
+              <div className="text-2xl font-bold">0</div>
+              <p className="text-xs text-muted-foreground">No active requests</p>
             </CardContent>
           </Card>
           <Card>
@@ -87,8 +50,8 @@ export default function Maintenance() {
               <AlertTriangle className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">3</div>
-              <p className="text-xs text-muted-foreground">Urgent attention</p>
+              <div className="text-2xl font-bold">0</div>
+              <p className="text-xs text-muted-foreground">No high priority</p>
             </CardContent>
           </Card>
           <Card>
@@ -97,8 +60,8 @@ export default function Maintenance() {
               <Calendar className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">2.5</div>
-              <p className="text-xs text-muted-foreground">days</p>
+              <div className="text-2xl font-bold">--</div>
+              <p className="text-xs text-muted-foreground">No data available</p>
             </CardContent>
           </Card>
         </div>
@@ -133,67 +96,79 @@ export default function Maintenance() {
         </div>
 
         <div className="space-y-4">
-          {maintenanceRequests.map((request) => (
-            <Card key={request.id} className="hover:shadow-lg transition-shadow">
-              <CardHeader>
-                <div className="flex justify-between items-start">
-                  <div className="space-y-1">
-                    <div className="flex items-center space-x-2">
-                      <CardTitle className="text-lg">{request.title}</CardTitle>
-                      <Badge variant="outline">{request.id}</Badge>
+          {maintenanceRequests.length === 0 ? (
+            <div className="text-center py-12">
+              <Wrench className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
+              <h3 className="text-lg font-medium text-foreground mb-2">No Maintenance Requests</h3>
+              <p className="text-muted-foreground mb-4">All maintenance requests will appear here</p>
+              <Button>
+                <Plus className="mr-2 h-4 w-4" />
+                New Request
+              </Button>
+            </div>
+          ) : (
+            maintenanceRequests.map((request) => (
+              <Card key={request.id} className="hover:shadow-lg transition-shadow">
+                <CardHeader>
+                  <div className="flex justify-between items-start">
+                    <div className="space-y-1">
+                      <div className="flex items-center space-x-2">
+                        <CardTitle className="text-lg">{request.title}</CardTitle>
+                        <Badge variant="outline">{request.id}</Badge>
+                      </div>
+                      <CardDescription className="flex items-center">
+                        <MapPin className="h-4 w-4 mr-1" />
+                        {request.unit}, {request.property}
+                      </CardDescription>
                     </div>
-                    <CardDescription className="flex items-center">
-                      <MapPin className="h-4 w-4 mr-1" />
-                      {request.unit}, {request.property}
-                    </CardDescription>
+                    <div className="flex space-x-2">
+                      <Badge variant={
+                        request.priority === "High" ? "destructive" : 
+                        request.priority === "Medium" ? "default" : "secondary"
+                      }>
+                        {request.priority}
+                      </Badge>
+                      <Badge variant={
+                        request.status === "Completed" ? "default" :
+                        request.status === "In Progress" ? "secondary" : "outline"
+                      }>
+                        {request.status}
+                      </Badge>
+                    </div>
                   </div>
-                  <div className="flex space-x-2">
-                    <Badge variant={
-                      request.priority === "High" ? "destructive" : 
-                      request.priority === "Medium" ? "default" : "secondary"
-                    }>
-                      {request.priority}
-                    </Badge>
-                    <Badge variant={
-                      request.status === "Completed" ? "default" :
-                      request.status === "In Progress" ? "secondary" : "outline"
-                    }>
-                      {request.status}
-                    </Badge>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <div className="flex items-center text-sm">
+                      <User className="h-4 w-4 mr-2 text-muted-foreground" />
+                      <span className="font-medium">Tenant:</span>
+                      <span className="ml-1">{request.tenant}</span>
+                    </div>
+                    <div className="flex items-center text-sm">
+                      <Calendar className="h-4 w-4 mr-2 text-muted-foreground" />
+                      <span className="font-medium">Created:</span>
+                      <span className="ml-1">{request.createdDate}</span>
+                    </div>
+                    <div className="flex items-center text-sm">
+                      <Wrench className="h-4 w-4 mr-2 text-muted-foreground" />
+                      <span className="font-medium">Category:</span>
+                      <span className="ml-1">{request.category}</span>
+                    </div>
+                    <div className="flex items-center text-sm">
+                      <User className="h-4 w-4 mr-2 text-muted-foreground" />
+                      <span className="font-medium">Assigned:</span>
+                      <span className="ml-1">{request.assignedTo}</span>
+                    </div>
                   </div>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                  <div className="flex items-center text-sm">
-                    <User className="h-4 w-4 mr-2 text-muted-foreground" />
-                    <span className="font-medium">Tenant:</span>
-                    <span className="ml-1">{request.tenant}</span>
+                  <div className="flex justify-end space-x-2 mt-4">
+                    <Button variant="outline" size="sm">View Details</Button>
+                    <Button variant="outline" size="sm">Update Status</Button>
+                    <Button size="sm">Assign</Button>
                   </div>
-                  <div className="flex items-center text-sm">
-                    <Calendar className="h-4 w-4 mr-2 text-muted-foreground" />
-                    <span className="font-medium">Created:</span>
-                    <span className="ml-1">{request.createdDate}</span>
-                  </div>
-                  <div className="flex items-center text-sm">
-                    <Wrench className="h-4 w-4 mr-2 text-muted-foreground" />
-                    <span className="font-medium">Category:</span>
-                    <span className="ml-1">{request.category}</span>
-                  </div>
-                  <div className="flex items-center text-sm">
-                    <User className="h-4 w-4 mr-2 text-muted-foreground" />
-                    <span className="font-medium">Assigned:</span>
-                    <span className="ml-1">{request.assignedTo}</span>
-                  </div>
-                </div>
-                <div className="flex justify-end space-x-2 mt-4">
-                  <Button variant="outline" size="sm">View Details</Button>
-                  <Button variant="outline" size="sm">Update Status</Button>
-                  <Button size="sm">Assign</Button>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
+                </CardContent>
+              </Card>
+            ))
+          )}
         </div>
       </div>
     </DashboardLayout>

@@ -6,50 +6,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Calendar as CalendarIcon, Plus, ChevronLeft, ChevronRight, Clock, MapPin } from "lucide-react";
 import { useState } from "react";
 
-const events = [
-  {
-    id: 1,
-    title: "Property Inspection - Sunset Apartments",
-    type: "inspection",
-    date: "2024-01-20",
-    time: "10:00 AM",
-    duration: "2 hours",
-    location: "123 Main St, Springfield",
-    description: "Quarterly property inspection"
-  },
-  {
-    id: 2,
-    title: "Lease Signing - Michael Chen",
-    type: "lease",
-    date: "2024-01-22",
-    time: "2:00 PM",
-    duration: "1 hour",
-    location: "Downtown Office Complex",
-    description: "Lease renewal signing"
-  },
-  {
-    id: 3,
-    title: "Maintenance Appointment - HVAC Repair",
-    type: "maintenance",
-    date: "2024-01-23",
-    time: "9:00 AM",
-    duration: "3 hours",
-    location: "Suite 205, Downtown Office",
-    description: "Air conditioning system repair"
-  },
-  {
-    id: 4,
-    title: "Tenant Meeting - Sarah Johnson",
-    type: "meeting",
-    date: "2024-01-25",
-    time: "11:00 AM",
-    duration: "30 minutes",
-    location: "Apt 12A, Sunset Apartments",
-    description: "Discuss lease renewal options"
-  }
-];
-
-const upcomingEvents = events.filter(event => new Date(event.date) >= new Date()).slice(0, 5);
+const events: any[] = [];
+const upcomingEvents: any[] = [];
 
 export default function Calendar() {
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -177,27 +135,34 @@ export default function Calendar() {
                 <CardDescription>Next 5 scheduled events</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
-                {upcomingEvents.map((event) => (
-                  <div key={event.id} className="space-y-2 border-b pb-3 last:border-b-0">
-                    <div className="flex items-start justify-between">
-                      <div className="space-y-1">
-                        <h4 className="text-sm font-medium">{event.title}</h4>
-                        <div className="flex items-center text-xs text-muted-foreground">
-                          <Clock className="h-3 w-3 mr-1" />
-                          {new Date(event.date).toLocaleDateString()} at {event.time}
-                        </div>
-                        <div className="flex items-center text-xs text-muted-foreground">
-                          <MapPin className="h-3 w-3 mr-1" />
-                          {event.location}
-                        </div>
-                      </div>
-                      <Badge variant={getEventTypeBadge(event.type) as "default"} className="text-xs">
-                        {event.type}
-                      </Badge>
-                    </div>
-                    <p className="text-xs text-muted-foreground">{event.description}</p>
+                {upcomingEvents.length === 0 ? (
+                  <div className="text-center py-8 text-muted-foreground">
+                    <CalendarIcon className="h-8 w-8 mx-auto mb-2" />
+                    <p>No upcoming events</p>
                   </div>
-                ))}
+                ) : (
+                  upcomingEvents.map((event) => (
+                    <div key={event.id} className="space-y-2 border-b pb-3 last:border-b-0">
+                      <div className="flex items-start justify-between">
+                        <div className="space-y-1">
+                          <h4 className="text-sm font-medium">{event.title}</h4>
+                          <div className="flex items-center text-xs text-muted-foreground">
+                            <Clock className="h-3 w-3 mr-1" />
+                            {new Date(event.date).toLocaleDateString()} at {event.time}
+                          </div>
+                          <div className="flex items-center text-xs text-muted-foreground">
+                            <MapPin className="h-3 w-3 mr-1" />
+                            {event.location}
+                          </div>
+                        </div>
+                        <Badge variant={getEventTypeBadge(event.type) as "default"} className="text-xs">
+                          {event.type}
+                        </Badge>
+                      </div>
+                      <p className="text-xs text-muted-foreground">{event.description}</p>
+                    </div>
+                  ))
+                )}
               </CardContent>
             </Card>
 
@@ -208,19 +173,19 @@ export default function Calendar() {
               <CardContent className="space-y-3">
                 <div className="flex justify-between items-center">
                   <span className="text-sm">This Week</span>
-                  <span className="text-sm font-medium">8 events</span>
+                  <span className="text-sm font-medium">0 events</span>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-sm">This Month</span>
-                  <span className="text-sm font-medium">24 events</span>
+                  <span className="text-sm font-medium">0 events</span>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-sm">Inspections Due</span>
-                  <span className="text-sm font-medium">3</span>
+                  <span className="text-sm font-medium">0</span>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-sm">Lease Renewals</span>
-                  <span className="text-sm font-medium">5</span>
+                  <span className="text-sm font-medium">0</span>
                 </div>
               </CardContent>
             </Card>

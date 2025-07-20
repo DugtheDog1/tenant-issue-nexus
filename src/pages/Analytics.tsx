@@ -1,31 +1,12 @@
 import { DashboardLayout } from "@/components/DashboardLayout";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { BarChart3, TrendingUp, DollarSign, Users, Home, Calendar } from "lucide-react";
+import { BarChart3, TrendingUp, DollarSign, Users, Home, Calendar, Wrench } from "lucide-react";
 import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, BarChart, Bar, PieChart, Pie, Cell } from "recharts";
 
-const revenueData = [
-  { month: "Jan", revenue: 45000, expenses: 32000 },
-  { month: "Feb", revenue: 48000, expenses: 33000 },
-  { month: "Mar", revenue: 52000, expenses: 35000 },
-  { month: "Apr", revenue: 50000, expenses: 34000 },
-  { month: "May", revenue: 55000, expenses: 36000 },
-  { month: "Jun", revenue: 58000, expenses: 37000 }
-];
-
-const occupancyData = [
-  { property: "Sunset Apts", occupancy: 92 },
-  { property: "Downtown Office", occupancy: 75 },
-  { property: "Riverside Condos", occupancy: 88 },
-  { property: "Metro Plaza", occupancy: 95 }
-];
-
-const maintenanceData = [
-  { name: "Plumbing", value: 35, fill: "hsl(var(--primary))" },
-  { name: "Electrical", value: 25, fill: "hsl(var(--secondary))" },
-  { name: "HVAC", value: 20, fill: "hsl(var(--accent))" },
-  { name: "General", value: 20, fill: "hsl(var(--muted))" }
-];
+const revenueData: any[] = [];
+const occupancyData: any[] = [];
+const maintenanceData: any[] = [];
 
 export default function Analytics() {
   return (
@@ -56,10 +37,9 @@ export default function Analytics() {
               <DollarSign className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">$308,000</div>
-              <p className="text-xs text-muted-foreground flex items-center">
-                <TrendingUp className="h-3 w-3 mr-1" />
-                +8.2% from last period
+              <div className="text-2xl font-bold">$0</div>
+              <p className="text-xs text-muted-foreground">
+                No revenue data yet
               </p>
             </CardContent>
           </Card>
@@ -69,9 +49,9 @@ export default function Analytics() {
               <Home className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">87.5%</div>
+              <div className="text-2xl font-bold">--</div>
               <p className="text-xs text-muted-foreground">
-                +2.1% from last period
+                No data available
               </p>
             </CardContent>
           </Card>
@@ -81,9 +61,9 @@ export default function Analytics() {
               <Users className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">156</div>
+              <div className="text-2xl font-bold">0</div>
               <p className="text-xs text-muted-foreground">
-                +3 new tenants
+                No tenants yet
               </p>
             </CardContent>
           </Card>
@@ -93,9 +73,9 @@ export default function Analytics() {
               <Calendar className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">14.2</div>
+              <div className="text-2xl font-bold">--</div>
               <p className="text-xs text-muted-foreground">
-                months
+                No data available
               </p>
             </CardContent>
           </Card>
@@ -108,28 +88,12 @@ export default function Analytics() {
               <CardDescription>Monthly comparison over the last 6 months</CardDescription>
             </CardHeader>
             <CardContent>
-              <ResponsiveContainer width="100%" height={300}>
-                <LineChart data={revenueData}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="month" />
-                  <YAxis />
-                  <Tooltip />
-                  <Line 
-                    type="monotone" 
-                    dataKey="revenue" 
-                    stroke="hsl(var(--primary))" 
-                    strokeWidth={2}
-                    name="Revenue"
-                  />
-                  <Line 
-                    type="monotone" 
-                    dataKey="expenses" 
-                    stroke="hsl(var(--destructive))" 
-                    strokeWidth={2}
-                    name="Expenses"
-                  />
-                </LineChart>
-              </ResponsiveContainer>
+              <div className="flex items-center justify-center h-[300px] text-muted-foreground">
+                <div className="text-center">
+                  <BarChart3 className="h-12 w-12 mx-auto mb-2" />
+                  <p>No revenue data available</p>
+                </div>
+              </div>
             </CardContent>
           </Card>
 
@@ -139,19 +103,12 @@ export default function Analytics() {
               <CardDescription>Current occupancy rates across properties</CardDescription>
             </CardHeader>
             <CardContent>
-              <ResponsiveContainer width="100%" height={300}>
-                <BarChart data={occupancyData}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="property" />
-                  <YAxis />
-                  <Tooltip />
-                  <Bar 
-                    dataKey="occupancy" 
-                    fill="hsl(var(--primary))"
-                    name="Occupancy %"
-                  />
-                </BarChart>
-              </ResponsiveContainer>
+              <div className="flex items-center justify-center h-[300px] text-muted-foreground">
+                <div className="text-center">
+                  <Home className="h-12 w-12 mx-auto mb-2" />
+                  <p>No occupancy data available</p>
+                </div>
+              </div>
             </CardContent>
           </Card>
         </div>
@@ -163,34 +120,11 @@ export default function Analytics() {
               <CardDescription>Distribution of maintenance request types</CardDescription>
             </CardHeader>
             <CardContent>
-              <ResponsiveContainer width="100%" height={300}>
-                <PieChart>
-                  <Pie
-                    data={maintenanceData}
-                    cx="50%"
-                    cy="50%"
-                    innerRadius={60}
-                    outerRadius={120}
-                    paddingAngle={5}
-                    dataKey="value"
-                  >
-                    {maintenanceData.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={entry.fill} />
-                    ))}
-                  </Pie>
-                  <Tooltip />
-                </PieChart>
-              </ResponsiveContainer>
-              <div className="grid grid-cols-2 gap-2 mt-4">
-                {maintenanceData.map((item, index) => (
-                  <div key={index} className="flex items-center text-sm">
-                    <div 
-                      className="w-3 h-3 rounded-full mr-2" 
-                      style={{ backgroundColor: item.fill }}
-                    />
-                    <span>{item.name}: {item.value}%</span>
-                  </div>
-                ))}
+              <div className="flex items-center justify-center h-[300px] text-muted-foreground">
+                <div className="text-center">
+                  <Wrench className="h-12 w-12 mx-auto mb-2" />
+                  <p>No maintenance data available</p>
+                </div>
               </div>
             </CardContent>
           </Card>
@@ -203,27 +137,27 @@ export default function Analytics() {
             <CardContent className="space-y-4">
               <div className="flex justify-between items-center">
                 <span className="text-sm font-medium">Rent Collection Rate</span>
-                <span className="text-sm font-bold text-primary">96.8%</span>
+                <span className="text-sm font-bold">--</span>
               </div>
               <div className="flex justify-between items-center">
                 <span className="text-sm font-medium">Tenant Turnover Rate</span>
-                <span className="text-sm font-bold">12.3%</span>
+                <span className="text-sm font-bold">--</span>
               </div>
               <div className="flex justify-between items-center">
                 <span className="text-sm font-medium">Maintenance Response Time</span>
-                <span className="text-sm font-bold">2.1 days</span>
+                <span className="text-sm font-bold">--</span>
               </div>
               <div className="flex justify-between items-center">
                 <span className="text-sm font-medium">Vacancy Rate</span>
-                <span className="text-sm font-bold">12.5%</span>
+                <span className="text-sm font-bold">--</span>
               </div>
               <div className="flex justify-between items-center">
                 <span className="text-sm font-medium">Operating Expense Ratio</span>
-                <span className="text-sm font-bold">65.2%</span>
+                <span className="text-sm font-bold">--</span>
               </div>
               <div className="flex justify-between items-center">
                 <span className="text-sm font-medium">Net Operating Income</span>
-                <span className="text-sm font-bold text-primary">$21,300</span>
+                <span className="text-sm font-bold">--</span>
               </div>
             </CardContent>
           </Card>

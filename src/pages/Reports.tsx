@@ -5,44 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { FileText, Download, Calendar, TrendingUp, PieChart, BarChart3, Users, DollarSign } from "lucide-react";
 
-const reports = [
-  {
-    id: 1,
-    name: "Monthly Financial Report",
-    description: "Comprehensive financial overview including revenue, expenses, and profit margins",
-    type: "Financial",
-    lastGenerated: "2024-01-15",
-    status: "Ready",
-    size: "2.3 MB"
-  },
-  {
-    id: 2,
-    name: "Occupancy Analysis",
-    description: "Detailed analysis of property occupancy rates and trends",
-    type: "Occupancy",
-    lastGenerated: "2024-01-10",
-    status: "Ready",
-    size: "1.8 MB"
-  },
-  {
-    id: 3,
-    name: "Maintenance Summary",
-    description: "Summary of all maintenance requests, costs, and completion rates",
-    type: "Maintenance",
-    lastGenerated: "2024-01-08",
-    status: "Generating",
-    size: "-"
-  },
-  {
-    id: 4,
-    name: "Tenant Demographics",
-    description: "Analysis of tenant profiles, lease terms, and retention rates",
-    type: "Tenant",
-    lastGenerated: "2024-01-05",
-    status: "Ready",
-    size: "1.2 MB"
-  }
-];
+const reports: any[] = [];
 
 const reportTemplates = [
   {
@@ -94,8 +57,8 @@ export default function Reports() {
               <FileText className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">47</div>
-              <p className="text-xs text-muted-foreground">+3 this month</p>
+              <div className="text-2xl font-bold">0</div>
+              <p className="text-xs text-muted-foreground">No reports yet</p>
             </CardContent>
           </Card>
           <Card>
@@ -104,7 +67,7 @@ export default function Reports() {
               <Calendar className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">8</div>
+              <div className="text-2xl font-bold">0</div>
               <p className="text-xs text-muted-foreground">reports generated</p>
             </CardContent>
           </Card>
@@ -114,7 +77,7 @@ export default function Reports() {
               <TrendingUp className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">12</div>
+              <div className="text-2xl font-bold">0</div>
               <p className="text-xs text-muted-foreground">scheduled reports</p>
             </CardContent>
           </Card>
@@ -124,7 +87,7 @@ export default function Reports() {
               <FileText className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">156</div>
+              <div className="text-2xl font-bold">0</div>
               <p className="text-xs text-muted-foreground">MB of 1GB</p>
             </CardContent>
           </Card>
@@ -191,37 +154,49 @@ export default function Reports() {
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
-              {reports.map((report) => (
-                <div key={report.id} className="flex items-center justify-between p-4 border rounded-lg hover:bg-muted/50 transition-colors">
-                  <div className="flex items-center space-x-4">
-                    <FileText className="h-8 w-8 text-primary" />
-                    <div>
-                      <h3 className="font-medium">{report.name}</h3>
-                      <p className="text-sm text-muted-foreground">{report.description}</p>
-                      <div className="flex items-center space-x-4 mt-1">
-                        <span className="text-xs text-muted-foreground">
-                          Last generated: {report.lastGenerated}
-                        </span>
-                        <span className="text-xs text-muted-foreground">
-                          Size: {report.size}
-                        </span>
+              {reports.length === 0 ? (
+                <div className="text-center py-12">
+                  <FileText className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
+                  <h3 className="text-lg font-medium text-foreground mb-2">No Reports Generated</h3>
+                  <p className="text-muted-foreground mb-4">Generate your first report to get started</p>
+                  <Button>
+                    <FileText className="mr-2 h-4 w-4" />
+                    Generate Report
+                  </Button>
+                </div>
+              ) : (
+                reports.map((report) => (
+                  <div key={report.id} className="flex items-center justify-between p-4 border rounded-lg hover:bg-muted/50 transition-colors">
+                    <div className="flex items-center space-x-4">
+                      <FileText className="h-8 w-8 text-primary" />
+                      <div>
+                        <h3 className="font-medium">{report.name}</h3>
+                        <p className="text-sm text-muted-foreground">{report.description}</p>
+                        <div className="flex items-center space-x-4 mt-1">
+                          <span className="text-xs text-muted-foreground">
+                            Last generated: {report.lastGenerated}
+                          </span>
+                          <span className="text-xs text-muted-foreground">
+                            Size: {report.size}
+                          </span>
+                        </div>
                       </div>
                     </div>
+                    <div className="flex items-center space-x-3">
+                      <Badge variant={report.status === "Ready" ? "default" : "secondary"}>
+                        {report.status}
+                      </Badge>
+                      <Badge variant="outline">{report.type}</Badge>
+                      {report.status === "Ready" && (
+                        <Button variant="outline" size="sm">
+                          <Download className="h-4 w-4 mr-2" />
+                          Download
+                        </Button>
+                      )}
+                    </div>
                   </div>
-                  <div className="flex items-center space-x-3">
-                    <Badge variant={report.status === "Ready" ? "default" : "secondary"}>
-                      {report.status}
-                    </Badge>
-                    <Badge variant="outline">{report.type}</Badge>
-                    {report.status === "Ready" && (
-                      <Button variant="outline" size="sm">
-                        <Download className="h-4 w-4 mr-2" />
-                        Download
-                      </Button>
-                    )}
-                  </div>
-                </div>
-              ))}
+                ))
+              )}
             </div>
           </CardContent>
         </Card>
